@@ -1,0 +1,12 @@
+{
+  "root": true,
+  "extends": [ "standard", "standard-react" ],
+  "plugins": [
+    "react"
+  ],
+  "parser": "babel-eslint",
+  "globals": {
+    "inkdrop": true,
+    "CodeMirror": true
+  }
+}

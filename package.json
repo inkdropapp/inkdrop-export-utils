@@ -1,0 +1,40 @@
+{
+  "name": "inkdrop-export-utils",
+  "version": "1.0.0",
+  "description": "Utilities for exporting notes from Inkdrop",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src -d lib",
+    "watch": "babel src --watch -d lib",
+    "test": "eslint src --ext .js"
+  },
+  "keywords": [
+    "inkdrop",
+    "markdown"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/inkdropapp/inkdrop-export-utils.git"
+  },
+  "author": "Takuya Matsuyama <hi@craftz.dog>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-0-without-async": "^1.0.0",
+    "babel-register": "^6.26.0",
+    "eslint": "^4.8.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-config-standard-react": "^5.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
