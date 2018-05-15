@@ -19,7 +19,7 @@ export async function renderHTML (markdown) {
 
 export function getStylesheets () {
   return inkdrop.styles.getStyleElements().filter((el) => {
-    return typeof el.context === 'undefined'
+    return typeof el.context === 'undefined' || el.context === 'inkdrop-preview'
   }).reduce((styles, el) => {
     return styles + el.outerHTML
   }, '')
