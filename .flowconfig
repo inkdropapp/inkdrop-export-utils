@@ -1,0 +1,31 @@
+[ignore]
+.*/node_modules/fbjs/flow/.*
+.*/node_modules/fbjs/.*/*.flow
+.*/node_modules/flux/flow/.*
+.*/node_modules/graphql/.*/*.flow
+.*/node_modules/conventional-changelog-core/.*
+.*/node_modules/immutable/.*
+.*/lib/.*
+
+[include]
+
+[libs]
+./interfaces/global.js
+
+[options]
+module.file_ext=.coffee
+module.file_ext=.less
+module.file_ext=.js
+module.file_ext=.jsx
+module.file_ext=.json
+
+module.name_mapper='.*\(.coffee\)' -> 'CoffeeModule'
+module.name_mapper='.*\(.less\)' -> 'LESSModule'
+# module.system=haste
+# module.system.node.resolve_dirname=lib
+
+# esproposal.decorators=ignore
+
+module.name_mapper='^shared\/\(.*\)$' -> '<PROJECT_ROOT>/src/shared/\1'
+module.name_mapper='^browser\/\(.*\)$' -> '<PROJECT_ROOT>/src/browser/\1'
+module.name_mapper='^main\/\(.*\)$' -> '<PROJECT_ROOT>/src/main/\1'
