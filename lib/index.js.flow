@@ -1,8 +1,10 @@
 // @flow
 import fs from 'fs'
 import path from 'path'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { markdownRenderer } from 'inkdrop'
+import { Provider } from 'react-redux'
 
 export async function renderHTML(markdown: string) {
   const file = await markdownRenderer.render(markdown)
@@ -12,7 +14,10 @@ export async function renderHTML(markdown: string) {
   const { body } = document
   if (body) {
     body.appendChild(container)
-    ReactDOM.render(file.contents, container)
+    ReactDOM.render(
+      <Provider store={inkdrop.store}>{file.contents}</Provider>,
+      container
+    )
     const html = container.innerHTML
     body.removeChild(container)
 
@@ -54,7 +59,7 @@ export async function exportImage(uri: string, dirToSave: string) {
     const db = dataStore.getLocalDB()
     const [, docId] = uri.match(/^inkdrop:\/\/(file:.*)$/) || []
     if (docId) {
-      const file = await db.file.get(docId)
+      const file = await db.files.get(docId)
       const buffer = await db.utils.getBufferFromFile(docId)
 
       const name = file.name || 'index'
