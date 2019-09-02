@@ -40,13 +40,18 @@ export function getStylesheets() {
     }, '')
 }
 
-export async function replaceImages(body: string, dirToSave: string) {
+export async function replaceImages(
+  body: string,
+  dirToSave: string,
+  basePath?: string
+) {
   // find attachments
   const uris = body.match(/inkdrop:\/\/file:[^) "']*/g) || []
   for (let i = 0; i < uris.length; ++i) {
     const uri = uris[i]
-    const imagePath = await exportImage(uri, dirToSave)
-    if (imagePath) {
+    let imagePath = await exportImage(uri, dirToSave)
+    if (typeof imagePath === 'string') {
+      if (basePath) imagePath = path.relative(basePath, imagePath)
       body = body.replace(uri, imagePath)
     }
   }
