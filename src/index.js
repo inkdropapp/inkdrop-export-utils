@@ -5,6 +5,7 @@ import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { markdownRenderer } from 'inkdrop'
 import { Provider } from 'react-redux'
+import type { Note } from 'inkdrop-model'
 
 export async function renderHTML(markdown: string) {
   const file = await markdownRenderer.render(markdown)
@@ -78,4 +79,42 @@ export async function exportImage(uri: string, dirToSave: string) {
     console.error('Failed to export image file:', e)
     return false
   }
+}
+
+export async function createHTML(note: Note) {
+  const templateFilePath = require.resolve(
+    path.join('inkdrop-export-utils', 'assets', 'template.html')
+  )
+  const templateHtml = fs.readFileSync(templateFilePath, 'utf-8')
+
+  const markdown = `# ${note.title}\n${note.body}`
+  const htmlBody = await renderHTML(markdown)
+  const htmlStyles = getStylesheets()
+  const outputHtml = templateHtml
+    .replace('{%body%}', htmlBody)
+    .replace('{%styles%}', htmlStyles)
+    .replace('{%title%}', note.title)
+  return outputHtml
+}
+
+export async function createWebView(note: Note) {
+  const outputHtml = await createHTML(note)
+  const fn = saveHTMLToTmp(outputHtml)
+  const webView: Object = document.createElement('webview')
+  window.document.body.appendChild(webView)
+  webView.src = fn
+  await new Promise(resolve => {
+    webView.addEventListener('did-finish-load', resolve)
+  })
+  return webView
+}
+
+export function removeWebView(webView: Object, delay: number = 30 * 60 * 1000) {
+  setTimeout(() => window.document.body.removeChild(webView), delay)
+}
+
+export function saveHTMLToTmp(html: string) {
+  const fn = path.join(require('os').tmpdir(), 'inkdrop-export.html')
+  fs.writeFileSync(fn, html, 'utf-8')
+  return fn
 }

@@ -5,7 +5,6 @@
 .*/node_modules/graphql/.*/*.flow
 .*/node_modules/conventional-changelog-core/.*
 .*/node_modules/immutable/.*
-.*/lib/.*
 
 [include]
 

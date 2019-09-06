@@ -18,6 +18,9 @@
   },
   "author": "Takuya Matsuyama <hi@craftz.dog>",
   "license": "MIT",
+  "dependencies": {
+    "inkdrop-model": "^2.4.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
