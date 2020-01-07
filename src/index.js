@@ -103,8 +103,17 @@ export async function createWebView(note: Note) {
   const webView: Object = document.createElement('webview')
   window.document.body.appendChild(webView)
   webView.src = fn
-  await new Promise(resolve => {
-    webView.addEventListener('did-finish-load', resolve)
+  await new Promise((resolve, reject) => {
+    let resolved = false
+    const done = () => {
+      if (!resolved) {
+        resolved = true
+        resolve()
+      }
+    }
+    webView.addEventListener('did-finish-load', done)
+    webView.addEventListener('did-fail-load', reject)
+    setTimeout(done, 1000 * 5)
   })
   return webView
 }
