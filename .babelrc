@@ -2,9 +2,10 @@
   "presets": [
     "@babel/preset-flow",
     ["@babel/preset-env", {
-      "targets": { "electron": "3.0.14" },
+      "targets": { "electron": "6.0.11" },
       "useBuiltIns": "usage",
-      "debug": false
+      "debug": false,
+      "corejs": 3
     }],
     "@babel/preset-react"
   ],
