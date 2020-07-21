@@ -1,5 +1,4 @@
-Inkdrop Export Utils
-=====================
+# Inkdrop Export Utils
 
 Helper functions for exporting Markdown notes from Inkdrop. Works great with plugins.
 
@@ -27,7 +26,7 @@ Extended Markdown syntaxes are also processed such as **math** and **sequence-di
 
 It returns stylesheets provided by plugins that would be necessary for exported HTMLs.
 
-### `async replaceImages (markdown: string, dirToSave: string): string`
+### `async replaceImages (markdown: string, dirToSave: string, basePath?: string): string`
 
 It exports attached images to specified local directory and replaces URIs in Markdown with their paths.
 
