@@ -16,7 +16,7 @@ export async function renderHTML(markdown: string) {
   if (body) {
     body.appendChild(container)
     ReactDOM.render(
-      <Provider store={inkdrop.store}>{file.contents}</Provider>,
+      <Provider store={inkdrop.store}>{file.result}</Provider>,
       container
     )
     const html = container.innerHTML

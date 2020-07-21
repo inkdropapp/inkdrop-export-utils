@@ -45,6 +45,6 @@
     "assets"
   ],
   "engines": {
-    "inkdrop": "^4.x"
+    "inkdrop": "^5.x"
   }
 }
