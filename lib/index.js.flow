@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import { markdownRenderer } from 'inkdrop'
+import { markdownRenderer, logger } from 'inkdrop'
 import { Provider } from 'react-redux'
 import type { Note } from 'inkdrop-model'
 
@@ -57,6 +57,25 @@ export async function replaceImages(
     }
   }
   return body
+}
+
+export async function replaceHTMLImagesWithDataURI(html: string) {
+  const { File: IDFile } = require('inkdrop').models
+  const m = html.match(/inkdrop-file:\/\/file:[^"]*/g)
+  if (m instanceof Array && m.length > 0) {
+    for (const uri of m) {
+      try {
+        const [, docId] = uri.match(/\/\/(file:.*)$/)
+        const file = await IDFile.loadWithId(docId)
+        const base64 = file.getAsBase64()
+        html = html.replace(uri, `data:${file.contentType};base64,${base64}`)
+      } catch (e) {
+        logger.error('Failed to replace images with data URI:', uri)
+        logger.error(e)
+      }
+    }
+  }
+  return html
 }
 
 export async function exportImage(uri: string, dirToSave: string) {
@@ -117,7 +136,7 @@ export function addTitleToMarkdown(md: string, title: string) {
 }
 
 export async function createWebView(note: Note) {
-  const outputHtml = await createHTML(note)
+  const outputHtml = await createHTML(note, { addTitle: true })
   const fn = saveHTMLToTmp(outputHtml)
   const webView: Object = document.createElement('webview')
   window.document.body.appendChild(webView)
