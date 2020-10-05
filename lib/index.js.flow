@@ -140,6 +140,7 @@ export async function createWebView(note: Note) {
   const fn = saveHTMLToTmp(outputHtml)
   const webView: Object = document.createElement('webview')
   window.document.body.appendChild(webView)
+  webView.style.position = 'absolute'
   webView.src = fn
   await new Promise((resolve, reject) => {
     let resolved = false
