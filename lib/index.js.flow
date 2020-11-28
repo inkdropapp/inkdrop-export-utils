@@ -131,7 +131,8 @@ export function addTitleToMarkdown(md: string, title: string) {
     const frontmatter = match[0]
     return `${frontmatter}\n# ${title}\n${md.substr(frontmatter.length)}`
   } else {
-    return `# ${title}\n${md}`
+    const body = md.match(/^.*$/m)[0].length === 0 ? `\n${md}` : `\n\n${md}`
+    return `# ${title}${body}`
   }
 }
 
