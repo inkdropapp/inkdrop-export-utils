@@ -1,6 +1,6 @@
 {
   "name": "inkdrop-export-utils",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "Utilities for exporting notes from Inkdrop",
   "main": "lib/index.js",
   "scripts": {
