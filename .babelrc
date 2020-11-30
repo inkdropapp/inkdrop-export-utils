@@ -3,9 +3,7 @@
     "@babel/preset-flow",
     ["@babel/preset-env", {
       "targets": { "electron": "7.3.2" },
-      "useBuiltIns": "usage",
-      "debug": false,
-      "corejs": 3
+      "debug": false
     }],
     "@babel/preset-react"
   ],
