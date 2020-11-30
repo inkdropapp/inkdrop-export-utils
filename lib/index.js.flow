@@ -129,7 +129,8 @@ export function addTitleToMarkdown(md: string, title: string) {
   const match = md.match(/^---\n.*?---/ms)
   if (match instanceof Array && match.length > 0 && match.index === 0) {
     const frontmatter = match[0]
-    return `${frontmatter}\n# ${title}\n${md.substr(frontmatter.length)}`
+    const body = md.substr(frontmatter.length).trimLeft()
+    return `${frontmatter}\n# ${title}\n\n${body}`
   } else {
     const linebreaks = md.split('\n', 1)[0].length === 0 ? '\n' : '\n\n'
     return `# ${title}${linebreaks}${md}`
