@@ -5,8 +5,9 @@ import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { markdownRenderer, logger } from 'inkdrop'
 import { Provider } from 'react-redux'
-export { addTitleToMarkdown } from './add-title-to-markdown'
+import { addTitleToMarkdown } from './add-title-to-markdown'
 import type { Note } from 'inkdrop-model'
+export { addTitleToMarkdown }
 
 export async function renderHTML(markdown: string): Promise<string> {
   const file = await markdownRenderer.render(markdown)
