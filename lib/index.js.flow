@@ -5,6 +5,7 @@ import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { markdownRenderer, logger } from 'inkdrop'
 import { Provider } from 'react-redux'
+export { addTitleToMarkdown } from './add-title-to-markdown'
 import type { Note } from 'inkdrop-model'
 
 export async function renderHTML(markdown: string): Promise<string> {
@@ -128,18 +129,6 @@ export async function createHTML(
     .replace('{%styles%}', htmlStyles)
     .replace('{%title%}', note.title)
   return outputHtml
-}
-
-export function addTitleToMarkdown(md: string, title: string): string {
-  const match = md.match(/^---\n.*?---/ms)
-  if (match instanceof Array && match.length > 0 && match.index === 0) {
-    const frontmatter = match[0]
-    const body = md.substr(frontmatter.length).trimLeft()
-    return `${frontmatter}\n# ${title}\n\n${body}`
-  } else {
-    const linebreaks = md.split('\n', 1)[0].length === 0 ? '\n' : '\n\n'
-    return `# ${title}${linebreaks}${md}`
-  }
 }
 
 export async function createWebView(note: Note): Object {
