@@ -7,7 +7,7 @@ import { markdownRenderer, logger } from 'inkdrop'
 import { Provider } from 'react-redux'
 import type { Note } from 'inkdrop-model'
 
-export async function renderHTML(markdown: string) {
+export async function renderHTML(markdown: string): Promise<string> {
   const file = await markdownRenderer.render(markdown)
   const container = document.createElement('div')
   container.style.position = 'absolute'
@@ -28,7 +28,7 @@ export async function renderHTML(markdown: string) {
   }
 }
 
-export function getStylesheets() {
+export function getStylesheets(): string {
   return inkdrop.styles
     .getStyleElements()
     .filter(el => {
@@ -45,7 +45,7 @@ export async function replaceImages(
   body: string,
   dirToSave: string,
   basePath?: string
-) {
+): Promise<string> {
   // find attachments
   const uris = body.match(/inkdrop:\/\/file:[^) "']*/g) || []
   for (let i = 0; i < uris.length; ++i) {
@@ -59,7 +59,9 @@ export async function replaceImages(
   return body
 }
 
-export async function replaceHTMLImagesWithDataURI(html: string) {
+export async function replaceHTMLImagesWithDataURI(
+  html: string
+): Promise<string> {
   const { File: IDFile } = require('inkdrop').models
   const m = html.match(/inkdrop-file:\/\/file:[^"]*/g)
   if (m instanceof Array && m.length > 0) {
@@ -78,7 +80,10 @@ export async function replaceHTMLImagesWithDataURI(html: string) {
   return html
 }
 
-export async function exportImage(uri: string, dirToSave: string) {
+export async function exportImage(
+  uri: string,
+  dirToSave: string
+): Promise<?string | false> {
   try {
     const { dataStore } = inkdrop.main
     const db = dataStore.getLocalDB()
@@ -106,7 +111,7 @@ export async function createHTML(
     addTitle?: boolean,
     templateHtml?: string
   } = { addTitle: true }
-) {
+): Promise<string> {
   const templateFilePath = require.resolve(
     path.join('inkdrop-export-utils', 'assets', 'template.html')
   )
@@ -125,7 +130,7 @@ export async function createHTML(
   return outputHtml
 }
 
-export function addTitleToMarkdown(md: string, title: string) {
+export function addTitleToMarkdown(md: string, title: string): string {
   const match = md.match(/^---\n.*?---/ms)
   if (match instanceof Array && match.length > 0 && match.index === 0) {
     const frontmatter = match[0]
@@ -137,7 +142,7 @@ export function addTitleToMarkdown(md: string, title: string) {
   }
 }
 
-export async function createWebView(note: Note) {
+export async function createWebView(note: Note): Object {
   const outputHtml = await createHTML(note, { addTitle: true })
   const fn = saveHTMLToTmp(outputHtml)
   const webView: Object = document.createElement('webview')
@@ -163,7 +168,7 @@ export function removeWebView(webView: Object, delay: number = 30 * 60 * 1000) {
   setTimeout(() => window.document.body.removeChild(webView), delay)
 }
 
-export function saveHTMLToTmp(html: string) {
+export function saveHTMLToTmp(html: string): string {
   const fn = path.join(require('os').tmpdir(), 'inkdrop-export.html')
   fs.writeFileSync(fn, html, 'utf-8')
   return fn
