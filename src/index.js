@@ -72,7 +72,10 @@ export async function replaceHTMLImagesWithDataURI(
         const [, docId] = uri.match(/\/\/(file:.*)$/)
         const file = await IDFile.loadWithId(docId)
         const base64 = file.getAsBase64()
-        html = html.replace(uri, `data:${file.contentType};base64,${base64}`)
+        html = html.replace(
+          uri,
+          () => `data:${file.contentType};base64,${base64}`
+        )
       } catch (e) {
         logger.error('Failed to replace images with data URI:', uri)
         logger.error(e)
@@ -126,9 +129,9 @@ export async function createHTML(
   const htmlBody = await renderHTML(markdown)
   const htmlStyles = getStylesheets()
   const outputHtml = templateHtml
-    .replace('{%body%}', htmlBody)
-    .replace('{%styles%}', htmlStyles)
-    .replace('{%title%}', note.title)
+    .replace('{%body%}', () => htmlBody)
+    .replace('{%styles%}', () => htmlStyles)
+    .replace('{%title%}', () => note.title)
   return outputHtml
 }
 
