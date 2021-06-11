@@ -21,6 +21,10 @@ export async function renderHTML(markdown: string): Promise<string> {
       <Provider store={inkdrop.store}>{file.result}</Provider>,
       container
     )
+
+    // wait for `useEffect` update
+    await new Promise(resolve => setTimeout(resolve, 30))
+
     const html = container.innerHTML
     body.removeChild(container)
 
