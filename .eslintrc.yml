@@ -1,12 +1,11 @@
 root: true
 plugins:
   - flowtype
-  - prettier
 extends:
   - plugin:flowtype/recommended
-  - plugin:prettier/recommended
+  - prettier
   - plugin:react/recommended
-parser: babel-eslint
+parser: "@babel/eslint-parser"
 settings:
   react:
     version: "16"
@@ -20,13 +19,6 @@ globals:
   inkdrop: true
 rules:
   no-useless-escape: 0
-  prettier/prettier:
-    - 2
-    -
-      trailingComma: none
-      singleQuote: true
-      semi: false
-      arrowParens: avoid
   prefer-const: 2
   no-unused-vars:
     - 2
