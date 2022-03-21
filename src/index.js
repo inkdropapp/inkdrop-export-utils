@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import { markdownRenderer, logger } from 'inkdrop'
+import { markdownRenderer, logger, PrintingContext } from 'inkdrop'
 import { Provider } from 'react-redux'
 import { addTitleToMarkdown } from './add-title-to-markdown'
 import type { Note } from 'inkdrop-model'
@@ -12,13 +12,18 @@ export { addTitleToMarkdown }
 export async function renderHTML(markdown: string): Promise<string> {
   const file = await markdownRenderer.render(markdown)
   const container = document.createElement('div')
+  container.classList.add('inkdrop-export')
   container.style.position = 'absolute'
   container.style.zIndex = '-1000'
   const { body } = document
   if (body) {
     body.appendChild(container)
     ReactDOM.render(
-      <Provider store={inkdrop.store}>{file.result}</Provider>,
+      <Provider store={inkdrop.store}>
+        <PrintingContext.Provider value={{ printing: true }}>
+          {file.result}
+        </PrintingContext.Provider>
+      </Provider>,
       container
     )
 
