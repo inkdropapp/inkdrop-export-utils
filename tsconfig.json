@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strict": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "declarationDir": ".",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "jsx": "react"
+  },
+  "include": ["src/index.tsx", "src/inkdrop.d.ts", "src/global.d.ts"],
+  "exclude": ["node_modules", "**/*.test.ts", "lib"]
+}

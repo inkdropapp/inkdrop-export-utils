@@ -1,28 +1,19 @@
 root: true
-plugins:
-  - flowtype
 extends:
-  - plugin:flowtype/recommended
+  - plugin:@typescript-eslint/eslint-recommended
+  - plugin:@typescript-eslint/recommended
   - prettier
-  - plugin:react/recommended
-parser: "@babel/eslint-parser"
-settings:
-  react:
-    version: "16"
-env:
-  browser: true
-  es6: true
-  mocha: true
-  node: true
-globals:
-  "$": true
-  inkdrop: true
+parser: "@typescript-eslint/parser"
+parserOptions:
+  ecmaVersion: 2018
+  sourceType: 'module'
 rules:
   no-useless-escape: 0
-  prefer-const: 2
-  no-unused-vars:
+  "@typescript-eslint/no-explicit-any": 0
+  "@typescript-eslint/no-unused-vars":
     - 2
     -
       argsIgnorePattern: ^_
       varsIgnorePattern: ^_
-  react/display-name: 0
+  "@typescript-eslint/no-var-requires": 0
+  "@typescript-eslint/ban-ts-comment": 0
