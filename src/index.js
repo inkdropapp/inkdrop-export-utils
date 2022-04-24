@@ -12,7 +12,6 @@ export { addTitleToMarkdown }
 export async function renderHTML(markdown: string): Promise<string> {
   const file = await markdownRenderer.render(markdown)
   const container = document.createElement('div')
-  container.classList.add('inkdrop-export')
   container.style.position = 'absolute'
   container.style.zIndex = '-1000'
   const { body } = document
